@@ -7,6 +7,9 @@
   width: 1000px;
   height: 668px;
 }
+ul li {
+  list-style-type: none;
+}
 
 .header {
   margin: 0 auto;
@@ -58,23 +61,52 @@
 .main {
   width: 1000px;
   height: 550px;
+  display: flex;
 }
 
 /* main-nav */
 .main-nav {
-  width: 190px;
+  width: 25%;
   height: 550px;
   background-color: #f6f6f6;
-  display: inline-block;
+  /*display: inline-block;*/
   overflow: visible;
 }
 
 /* main-content */
 .main-content {
-  width: 798px;
+  width: 75%;
   height: 550px;
-  background-color: #fafafa;
-  display: inline-block;
+  /*background-color: #fafafa;*/
+  background-color: #bcbdbb;
+  /*display: inline-block;*/
+  display: flex;
+}
+
+
+.content-left-image {
+  margin-top: 60px;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.content-image {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+}
+
+.music-list {
+  /*display: inline-block;*/
+}
+
+.content-right-header {
+  margin-top: 30px;
+}
+
+.content-right-lyric {
+  width: 300px;
+  overflow: auto;
 }
 
 /*main-split*/
@@ -83,6 +115,7 @@
   width: 0px;
   height: 550px;
 }
+
 
 /* footer */
 .footer {
