@@ -1,0 +1,11 @@
+
+播放功能
+- 开始， 点击添加文件
+- 从 dir 读取文件名路径
+- 保存到 localStorage
+- 判断 localStorage 是否有该文件名，没则加
+
+- start
+- 从 localStorage 添加文件到播放列表
+- 显示到播放列表
+- 点击播放

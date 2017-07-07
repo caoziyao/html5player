@@ -3,12 +3,18 @@
   margin: 0px;
 }
 
+body {
+    width: 1200px;
+}
+
 .music-body {
   width: 1000px;
   height: 668px;
+  margin: 0 auto;
 }
 ul li {
   list-style-type: none;
+  cursor: pointer;
 }
 
 .header {
