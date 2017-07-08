@@ -19,13 +19,13 @@ let mainWindow;
 
 function createWindow() {
     // 创建浏览器窗口。
-    mainWindow = new BrowserWindow({width: 1000, height: 680});
+    mainWindow = new BrowserWindow({width: 1000, height: 700});
 
     // 加载应用的 index.html。
     mainWindow.loadURL(`file://${__dirname}/musicplayer.html`);
 
     // 启用开发工具。
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     // 当 window 被关闭，这个事件会被触发。
     mainWindow.on('closed', () => {

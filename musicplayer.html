@@ -76,9 +76,37 @@
 
       <div class="footer">
         <div class="footer-control">
-          <audio  id="id-audio-player" controls="controls">
+          <audio  id="id-audio-player" >
             <source src="music/1.mp3" >
           </audio>
+        </div>
+
+        <div class="play-control">
+          <!--播放暂停按钮-->
+          <img src="static/icon/light/back.png" id="id-icon-play-back">
+          <img src="static/icon/light/play.png" id="id-icon-play">
+          <img src="static/icon/light/pause.png" id="id-icon-pause" class="hidden">
+          <img src="static/icon/light/forward.png" id="id-icon-play-forward">
+          <!--进度条-->
+          <div id="id-control-bar">
+            <span id="id-music-bar"></span>
+            <span id="id-played-bar"></span>
+          </div>
+          <!-- 播放时间 -->
+          <div class="play-time">
+            <span id="id-current-time">00:00</span>
+            <span id="id-total-time"></span>
+          </div>
+          <!--音量控制条-->
+          <div id="id-volume-bar" class='trans unvisi'>
+            <span id="id-total-volume" style="width:70px;"></span>
+            <span id="id-current-volume" style='width:10px'></span>
+          </div>
+          <img src="static/icon/light/volume.svg" id="id-icon-volume">
+          <img src="static/icon/light/mute.svg" id="id-icon-volume-mute" class="hidden">
+          <img src="static/icon/light/listcircle.png" id="id-icon-listcircle">
+          <img src="static/icon/light/singlecircle.png" id="id-icon-singlecircle" class="hidden">
+
         </div>
 
         <div class="footer-scroll">
