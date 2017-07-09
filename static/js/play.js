@@ -1,3 +1,5 @@
+const file = require('./static/js/file')
+
 
 var loadFileEventListener = function () {
   var btn = document.getElementById('file');
@@ -85,14 +87,40 @@ var initMusicList = function () {
  }
 
 
+
+ // 打开文件
+var openFileListener = function () {
+    var ele = e('#id-open-file');
+
+    ele.addEventListener('click', function () {
+        file.openDailog(function (fileNames) {
+            // log('file', fileNames)
+            for (var i = 0; i < fileNames.length; i++) {
+                var path = fileNames[i];
+                var filename = path.split('/').pop()
+                appendHtml(filename, path)
+            }
+        });
+
+    })
+}
+
+
+// 监听时间
+var addListener = function () {
+    openFileListener()
+}
+
+
 // 程序入口
 var __main = function () {
-  loadMusicStorage();
-  initMusicList();
+    addListener()
+  // loadMusicStorage();
+  // initMusicList();
   // 从 localStorage 添加文件到播放列表
-  loadFileEventListener()
+  // loadFileEventListener()
   // 播放事件
-  playEventListener()
+  // playEventListener()
 }
 
 window.onload = function () {

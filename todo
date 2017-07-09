@@ -1,15 +1,20 @@
 
 播放功能
-- 开始， 点击添加文件
-- 从 dir 读取文件名路径
-- 保存到 localStorage
-- 判断 localStorage 是否有该文件名，没则加
+x- 开始， 点击添加文件
+x- 从 dir 读取文件名路径
+x- 保存到 localStorage
+x- 判断 localStorage 是否有该文件名，没则加
 
-- start
-- 从 localStorage 添加文件到播放列表
-- 显示到播放列表
-- 点击播放
+x- start
+x- 从 localStorage 添加文件到播放列表
+x- 显示到播放列表
+x- 点击播放
 
-- 漂亮控件
-- icon 从网上下载
-- 参考写样式
+x- 漂亮控件
+x- icon 从网上下载
+x- 参考写样式
+
+- electron 读取文件
+- 更新播放列表
+
+- 点击播放播放
