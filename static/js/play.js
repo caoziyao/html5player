@@ -1,72 +1,12 @@
 const file = require('./static/js/file')
 
 
-var loadFileEventListener = function () {
-  var btn = document.getElementById('file');
-  btn.addEventListener('change', handleFileSelect, false);
-
-  var a = new Array();
-
-   function handleFileSelect(evt) {
-       var files = evt.target.files; // FileList object
-       for (var i = 0; i < files.length; i++) {
-         var file = files[i];
-         var reader = new FileReader();
-         reader.readAsText(file);
-         console.log(file, reader);
-         reader.onload = loaded;
-       }
-   }
-
-   // 添加 music 到 localStorage
-   var loaded = function (evt) {
-     log('evt', evt, evt.path)
-   }
-}
-
-
-
 // 添加播放列表
 var appendHtml = function (filename, url) {
   var html = `<li class="li-music"><a class="li-music-link" data-src='${url}'>${filename}</a></li>`;
   var ul = e('.music-list');
   ul.insertAdjacentHTML('afterBegin', html)
 }
-
-
-// 从 localStorage 添加文件到播放列表
-// 格式：
-// {filename: url, ...}
-var initMusicList = function () {
-  // localStorage.setItem('myCat', 'Tom');
-  var myStorage = localStorage;
-  // myStorage.clear()
-  log('localStorage', myStorage)
-  for (var i = 0; i < myStorage.length; i++) {
-    var filename = myStorage.key(i)
-    var url = myStorage.getItem(filename)
-    appendHtml(filename, url)
-  }
-}
-
- // 添加 music 到 localStorage
- var loadMusicStorage = function () {
-   var music = {
-     '1.mp3': 'music/1.mp3',
-     '2.mp3': 'music/2.mp3',
-     '3.mp3': 'music/3.mp3',
-     '4.mp3': 'music/4.mp3',
-   }
-   var myStorage = localStorage;
-   var keyList = Object.keys(music);
-   for (var i = 0; i < keyList.length; i++) {
-    var key = keyList[i];
-    var path = music[key]
-    myStorage.setItem(key, path)
-   }
-
- }
-
 
 
  // 打开文件
@@ -81,7 +21,6 @@ var openFileBtnEvent = function () {
             playMusicListener();  // 播放音乐事件
         }
     });
-
 }
 
 
@@ -114,6 +53,25 @@ var musicPause = function() {
     pauseIcon.classList.add('hidden');
 }
 
+// 音乐静音
+var musicVolume = function() {
+    var volumeIcon = e('#id-icon-volume');
+    var muteIcon = e('#id-icon-mute');
+    music.muted = false;
+    volumeIcon.classList.remove('hidden');
+    muteIcon.classList.add('hidden');
+}
+
+// 音乐静音
+var musicMute = function() {
+    var volumeIcon = e('#id-icon-volume');
+    var muteIcon = e('#id-icon-mute');
+    music.muted = true;
+    volumeIcon.classList.add('hidden');
+    muteIcon.classList.remove('hidden');
+}
+
+
 
 // music can play
 var musicCanPlayEvent = function () {
@@ -142,17 +100,33 @@ var pauseIconClickEvent = function () {
     
 }
 
+//
+var volumeIconClickEvent = function () {
+    musicMute();
+
+}
+
+//
+var muteIconClickEvent = function () {
+    musicVolume();
+}
+
 // 监听事件
 var addListeners = function () {
     music = e('#id-audio-player');   // 播放控件
     var playIcon = e('#id-icon-play');
     var pauseIcon = e('#id-icon-pause');
+    var volumeIcon = e('#id-icon-volume');
+    var muteIcon = e('#id-icon-mute');
     var openFileBtn = e('#id-open-file');  // 打开
 
     music.addEventListener('canplay', musicCanPlayEvent);
     music.addEventListener('ended', musicPauseEvent);
+
     playIcon.addEventListener('click', playIconClickEvent);
     pauseIcon.addEventListener('click', pauseIconClickEvent);
+    volumeIcon.addEventListener('click', volumeIconClickEvent);
+    muteIcon.addEventListener('click', muteIconClickEvent);
 
     openFileBtn.addEventListener('click', openFileBtnEvent);
 
