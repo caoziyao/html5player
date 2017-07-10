@@ -26,11 +26,9 @@ var loadFileEventListener = function () {
 
 
 
-
-
 // 添加播放列表
 var appendHtml = function (filename, url) {
-  var html = `<li class="li-music" data-src='${url}'>${filename}</li>`;
+  var html = `<li class="li-music"><a class="li-music-link" data-src='${url}'>${filename}</a></li>`;
   var ul = e('.music-list');
   ul.insertAdjacentHTML('afterBegin', html)
 }
@@ -70,57 +68,100 @@ var initMusicList = function () {
  }
 
 
- // 播放事件
- var playEventListener = function () {
-   var a = e('#id-audio-player');   // 播放控件
-   a.addEventListener('canplay', function(){
-     a.play()
-   })
-
-  //  var musics = es('.li-music');
-   binAll('.li-music', 'click', function (event) {
-     var target = event.target;     // 播放列表
-       var path = target.dataset.src
-       a.src = path
-       a.play()
-   })
- }
-
-
 
  // 打开文件
-var openFileListener = function () {
-    var ele = e('#id-open-file');
+var openFileBtnEvent = function () {
+    var target = event.target;
+    file.openDailog( (fileNames) => {
+        // log('file', fileNames)
+        for (var i = 0; i < fileNames.length; i++) {
+            var path = fileNames[i];
+            var filename = path.split('/').pop();
+            appendHtml(filename, path);
+            playMusicListener();  // 播放音乐事件
+        }
+    });
 
-    ele.addEventListener('click', function () {
-        file.openDailog(function (fileNames) {
-            // log('file', fileNames)
-            for (var i = 0; i < fileNames.length; i++) {
-                var path = fileNames[i];
-                var filename = path.split('/').pop()
-                appendHtml(filename, path)
-            }
-        });
+}
 
+
+// 播放音乐
+var playMusicListener = function () {
+    binAll('.li-music', 'click', function (event) {
+        var target = event.target;     // 播放列表
+        var path = target.dataset.src;
+        music.src = path;
     })
 }
 
 
-// 监听时间
-var addListener = function () {
-    openFileListener()
+// 音乐播放
+var musicPlay = function () {
+    var playIcon = e('#id-icon-play');
+    var pauseIcon = e('#id-icon-pause');
+    music.play();
+    playIcon.classList.add('hidden');
+    pauseIcon.classList.remove('hidden')
+
+}
+
+// 音乐暂停
+var musicPause = function() {
+    var playIcon = e('#id-icon-play');
+    var pauseIcon = e('#id-icon-pause');
+    music.pause();
+    playIcon.classList.remove('hidden');
+    pauseIcon.classList.add('hidden');
+}
+
+
+// music can play
+var musicCanPlayEvent = function () {
+    musicPlay();
+}
+
+// music pause
+var musicPauseEvent = function () {
+    musicPause();
+}
+
+// playIcon click evnet
+var playIconClickEvent = function (event) {
+    var target = event.target;
+    if (music.paused || music.ended) {
+        musicPlay();
+    }
+}
+
+// pauseIcon click event
+var pauseIconClickEvent = function () {
+    var target = event.target;
+    if (!music.paused) {
+        musicPause();
+    }
+    
+}
+
+// 监听事件
+var addListeners = function () {
+    music = e('#id-audio-player');   // 播放控件
+    var playIcon = e('#id-icon-play');
+    var pauseIcon = e('#id-icon-pause');
+    var openFileBtn = e('#id-open-file');  // 打开
+
+    music.addEventListener('canplay', musicCanPlayEvent);
+    music.addEventListener('ended', musicPauseEvent);
+    playIcon.addEventListener('click', playIconClickEvent);
+    pauseIcon.addEventListener('click', pauseIconClickEvent);
+
+    openFileBtn.addEventListener('click', openFileBtnEvent);
+
 }
 
 
 // 程序入口
 var __main = function () {
-    addListener()
-  // loadMusicStorage();
-  // initMusicList();
-  // 从 localStorage 添加文件到播放列表
-  // loadFileEventListener()
-  // 播放事件
-  // playEventListener()
+    addListeners();
 }
 
 window.onload = function () {

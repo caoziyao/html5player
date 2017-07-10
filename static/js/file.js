@@ -11,8 +11,13 @@ class File {
     }
 
     openDailog(callback) {
-        dialog.showOpenDialog( (fileNames) => {
-            // log('show open dialog', fileNames);
+        //
+        dialog.showOpenDialog( {
+            properties: ['openFile', 'openDirectory', 'multiSelections', 'createDirectory'],
+            filters: [
+                {name: 'Music', extensions: ['mp3']},
+            ],
+        }, (fileNames) => {
             if (fileNames === undefined) {
                 console.log("No file selected");
                 return;
