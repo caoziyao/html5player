@@ -1,5 +1,7 @@
 const file = require('./static/js/file')
 
+playList = []
+
 
 // 添加播放列表
 var appendHtml = function (filename, url) {
@@ -19,7 +21,10 @@ var openFileBtnEvent = function () {
             var filename = path.split('/').pop();
             appendHtml(filename, path);
             playMusicListener();  // 播放音乐事件
+
+            playList.push(path);
         }
+        log(playList)
     });
 }
 
@@ -104,12 +109,131 @@ var pauseIconClickEvent = function () {
 var volumeIconClickEvent = function () {
     musicMute();
 
+    var currentBar = e('#id-current-volume');
+    currentBar.style.width = 0 + 'px';
+
+
 }
 
 //
 var muteIconClickEvent = function () {
     musicVolume();
+
+    var totalBar = e('#id-total-volume');
+    var currentBar = e('#id-current-volume');
+    var totalVolume = totalBar.clientWidth;
+
+    var css = music.volume * totalVolume
+    currentBar.style.width = css + 'px';
 }
+
+// 播放进度条
+var processPlayBar = function (curTime, totalTime) {
+    var totalBar = e('#id-total-music');
+    var playedBar = e('#id-played-music');
+
+    var width = totalBar.clientWidth;
+    var played = curTime / totalTime * width;
+    var css = played + 'px'
+
+    playedBar.style.width = css
+}
+
+// 播放时间
+var processPlayTxt = function (curTime, totalTime) {
+    var curTimeTxt = e('#id-current-time');
+    var totalTimeTxt = e('#id-total-time');
+
+    totalTimeTxt.innerHTML = totalTime;
+    curTimeTxt.innerHTML = curTime;
+}
+
+
+// 定时刷新任务
+var processPlayedEvent = function () {
+    var interval = 500;
+
+
+    setInterval(function(){
+        var totalTime = (music.duration / 60).toFixed(2);
+        var curTime = (music.currentTime / 60).toFixed(2);
+        // 播放进度条
+        processPlayBar(curTime, totalTime);
+        // 时间显示
+        processPlayTxt(curTime, totalTime);
+    }, interval)
+
+}
+
+// 点击播放进度条
+var musicProcessBarEvent = function (event) {
+    var target = event.target;
+    var totalBar = e('#id-total-music');
+    var width = totalBar.clientWidth;
+    var offsetX = event.offsetX;
+
+    music.currentTime = offsetX / width * music.duration;
+
+}
+
+
+var initVolumeProcessBar = function () {
+    var totalBar = e('#id-total-volume');
+    var currentBar = e('#id-current-volume');
+    var totalVolume = totalBar.clientWidth;
+    var currentVolume = currentBar.clientWidth;
+
+    music.volume = currentVolume / totalVolume;
+}
+
+// 音量进度条
+var volumeProcessBarEvent = function (event) {
+    var currentBar = e('#id-current-volume');
+    var target = event.target;
+    var totalBar = e('#id-total-volume');
+    var totalVolume = totalBar.clientWidth;
+    var offsetX = event.offsetX;
+
+    music.volume = offsetX / totalVolume;
+    currentBar.style.width = offsetX + 'px';
+
+}
+
+// 上一首
+var backIconClickEvent = function () {
+    var currSrc = music.currentSrc.split('file://').pop();
+    var encurrSrc = decodeURI(currSrc)
+    var next = 0;
+    var len = playList.length;
+    for (var i = 0; i < len; i++) {
+        var source = playList[i];
+        if (source == encurrSrc) {
+            next = i == 0 ? len - 1 : i - 1 ;
+            break;
+        }
+    }
+
+    music.src = playList[next];
+}
+
+// 下一首
+var forwardIconClickEvent = function () {
+    var currSrc = music.currentSrc.split('file://').pop();
+    var encurrSrc = decodeURI(currSrc)
+    var next = 0;
+    var len = playList.length;
+    for (var i = 0; i < len; i++) {
+        var source = playList[i];
+        if (source == encurrSrc) {
+            next = i == len - 1 ? 0 : i + 1 ;
+            break;
+        }
+    }
+
+    music.src = playList[next];
+    
+}
+
 
 // 监听事件
 var addListeners = function () {
@@ -119,16 +243,36 @@ var addListeners = function () {
     var volumeIcon = e('#id-icon-volume');
     var muteIcon = e('#id-icon-mute');
     var openFileBtn = e('#id-open-file');  // 打开
+    var musicProcessBar = e('#id-control-bar'); // 播放进度条
+    var volumeProcessBar = e('#id-volume-bar'); // 音乐进度条
+    var backIcon = e('#id-icon-play-back');
+    var forwardIcon = e('#id-icon-play-forward');
 
+    var defaultSrc = music.querySelector('source').src.split('file://').pop()
+    playList.push(defaultSrc)
+
+
+
+    initVolumeProcessBar();   // 初始化音量
     music.addEventListener('canplay', musicCanPlayEvent);
     music.addEventListener('ended', musicPauseEvent);
 
+
+    backIcon.addEventListener('click', backIconClickEvent);
+    forwardIcon.addEventListener('click', forwardIconClickEvent);
     playIcon.addEventListener('click', playIconClickEvent);
     pauseIcon.addEventListener('click', pauseIconClickEvent);
     volumeIcon.addEventListener('click', volumeIconClickEvent);
     muteIcon.addEventListener('click', muteIconClickEvent);
+    musicProcessBar.addEventListener('click', musicProcessBarEvent);
+    volumeProcessBar.addEventListener('click', volumeProcessBarEvent);
 
     openFileBtn.addEventListener('click', openFileBtnEvent);
+
+
+    // 定时刷新任务
+    processPlayedEvent();
+
 
 }
 
@@ -144,45 +288,7 @@ window.onload = function () {
 
 
 
-//
-// window.onload = function () {
-//
-//
-// var a = e('#id-audio-player')
-// var playBtn = e('#id-audio-player')
-// var pauseBtn = e('#id-btn-pause')
-// log('a', a, playBtn, pauseBtn)
-//
-// // play
-// playBtn.addEventListener('click', function() {
-//   log('click play')
-//   a.play()
-// })
-//
-// // pause
-// // pauseBtn.addEventListener('click', function() {
-// //   log('click pause')
-// //   a.pause()
-// // })
-//
-// var currSpenTime = e('#id-currtime')
-// var totalSpenTime = e('#id-totaltime')
-//
-// a.addEventListener('canplay', function(){
-//   var min = (a.duration / 60).toFixed(2)
-//   totalSpenTime.innerHTML = min
-//   a.play()
-// })
-//
-// var getCurrTime = function() {
-//   var interval = 500
-//   setInterval(function(){
-//     var currtime = (a.currentTime / 60).toFixed(2)
-//     currSpenTime.innerHTML = currtime
-//   }, interval)
-// }
-//
-// getCurrTime()
+
 //
 //
 // // var musicList = es('.ul-music')
@@ -194,11 +300,7 @@ window.onload = function () {
 //   var path = 'music/' + src
 //   a.src = path
 // })
-//
-//
-// // a.addEventListener('ended', function(){
-// //   a.play()
-// // })
+
 //
 //
 // var sunplay = function() {
@@ -228,7 +330,3 @@ window.onload = function () {
 //   })
 // }
 //
-//
-//   log('hwwof')
-//    randPlay()
-// };

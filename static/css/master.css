@@ -80,7 +80,36 @@ ul li {
   height: 550px;
   background-color: #f6f6f6;
   /*display: inline-block;*/
-  overflow: visible;
+
+}
+
+.main-nav-open {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.main-nav-open a {
+  text-decoration: none;
+}
+
+#id-open-file {
+  color: black;
+}
+
+.open-file-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+}
+
+.bg {
+  background: #000 url("../icon/background.jpg") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 /* main-content */
@@ -88,7 +117,7 @@ ul li {
   width: 75%;
   height: 550px;
   /*background-color: #fafafa;*/
-  background-color: #bcbdbb;
+  /*background-color: #bcbdbb;*/
   /*display: inline-block;*/
   display: flex;
 }
@@ -108,6 +137,14 @@ ul li {
 
 .music-list {
   /*display: inline-block;*/
+  width: 216px;
+  margin: 0 auto;
+  height: 450px;
+  overflow: auto;
+}
+
+.li-music {
+  margin-top: 5px;
 }
 
 .li-music:hover {
@@ -146,12 +183,16 @@ ul li {
   padding-left: 10px;
   display: flex;
 }
-.play-control img {
+.icon {
   width: 35px;
   height: 35px;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
+
+}
+.play-control img {
   margin-right: 25px;
 }
+
 .play-control img:hover{
   cursor: pointer;
 }
@@ -163,7 +204,11 @@ ul li {
   margin-right: 25px;
 }
 
-#id-music-bar {
+#id-control-bar:hover {
+  cursor: pointer;
+}
+
+#id-total-music {
   display: inline-block;
   width: 400px;
   background-color: #afafaf;
@@ -172,9 +217,9 @@ ul li {
   position: absolute;
 }
 
-#id-played-bar {
+#id-played-music {
   display: inline-block;
-  width: 100px;
+  width: 0px;
   height: 5px;
   background-color: #c93027;
   z-index: 2;
@@ -199,6 +244,10 @@ ul li {
   margin-right: 15px;
 }
 
+#id-volume-bar:hover {
+  cursor: pointer;
+}
+
 
 #id-total-volume {
   display: inline-block;
@@ -211,7 +260,7 @@ ul li {
 
 #id-current-volume {
   display: inline-block;
-  width: 400px;
+  width: 50px;
   height: 5px;
   background-color: #c93027;
   z-index: 2;

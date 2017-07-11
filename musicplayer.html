@@ -9,8 +9,6 @@
 
   </head>
   <body>
-    <!--<input type="file" id="file" name="files[]" multiple />-->
-
     <div class="music-body">
       <div class="header">
         <div class="header-items header-title">
@@ -28,16 +26,12 @@
       <div class="main">
         <div class="main-nav">
           <div class="main-nav-open">
-            <img src="">
-            <a href="#" id="id-open-file" class="btn">打开</a>
+
+            <a href="#" id="id-open-file" class="btn"><img class="open-file-icon" src="static/icon/light/folder.png">打开</a>
           </div>
-          
+          <!--播放列表-->
           <ul class="music-list">
-            <!-- <li class="ul-music music-1" data-src='1.mp3'>1.mp3</li>
-            <li class="ul-music music-2" data-src='2.mp3'>2.mp3</li>
-            <li class="ul-music music-3" data-src='2.mp3'>3.mp3</li>
-            <li class="ul-music music-3" data-src='2.mp3'>3.mp3</li>
-            <li class="ul-music music-3" data-src='2.mp3'>3.mp3</li> -->
+
           </ul>
         </div>
 
@@ -45,7 +39,7 @@
 
         </div> -->
 
-        <div class="main-content">
+        <div class="main-content bg">
           <div class="main-content-left">
             <div class="content-left-image">
               <img class="content-image" src="static/image/1.jpg" alt="">
@@ -59,6 +53,7 @@
             <div class="content-right-header">
               <h3>听说？</h3>
             </div>
+            <!--歌词-->
             <div class="content-right-lyric">
               <p>全世界只有两个人
                 为何一个转身
@@ -88,31 +83,30 @@
 
         <div class="play-control">
           <!--播放暂停按钮-->
-          <img src="static/icon/light/back.png" id="id-icon-play-back">
-          <img src="static/icon/light/play.png" id="id-icon-play">
-          <img src="static/icon/light/pause.png" id="id-icon-pause" class="hidden">
-          <img src="static/icon/light/forward.png" id="id-icon-play-forward">
+          <img class="icon" src="static/icon/light/back.png" id="id-icon-play-back">
+          <img class="icon"  src="static/icon/light/play.png" id="id-icon-play">
+          <img class="icon hidden"  src="static/icon/light/pause.png" id="id-icon-pause">
+          <img class="icon"  src="static/icon/light/forward.png" id="id-icon-play-forward">
           <!--进度条-->
           <div id="id-control-bar">
-            <span id="id-music-bar"></span>
-            <span id="id-played-bar"></span>
+            <span id="id-total-music"></span>
+            <span id="id-played-music"></span>
           </div>
           <!-- 播放时间 -->
           <div class="play-time">
-            <span id="id-current-time">00:00</span>
-            <span id="id-total-time"></span>
+            <span id="id-current-time">00:00</span>/<span id="id-total-time">00:00</span>
           </div>
-          <img src="static/icon/light/volume.svg" id="id-icon-volume">
-          <img src="static/icon/light/mute.svg" id="id-icon-mute" class="hidden">
+          <img  class="icon"  src="static/icon/light/volume.svg" id="id-icon-volume">
+          <img  class="icon hidden"  src="static/icon/light/mute.svg" id="id-icon-mute" >
           <!--音量控制条-->
           <div id="id-volume-bar" class='trans unvisi'>
-            <span id="id-total-volume" style="width:70px;"></span>
-            <span id="id-current-volume" style='width:10px'></span>
+            <span id="id-total-volume"></span>
+            <span id="id-current-volume"></span>
           </div>
 
 
-          <img src="static/icon/light/listcircle.png" id="id-icon-listcircle">
-          <img src="static/icon/light/singlecircle.png" id="id-icon-singlecircle" class="hidden">
+          <img  class="icon"  src="static/icon/light/listcircle.png" id="id-icon-listcircle">
+          <img  class="icon hidden"  src="static/icon/light/singlecircle.png" id="id-icon-singlecircle">
 
         </div>
 
