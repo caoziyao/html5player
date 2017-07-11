@@ -32,13 +32,6 @@ class File {
     }
 }
 
-// var abc = function () {
-//     log('hello')
-// };
-//
-// var ccc = {
-//     abc: abc,
-// }
 
 
 var file = new File()

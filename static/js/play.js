@@ -1,4 +1,6 @@
 const file = require('./static/js/file')
+const Music = require('./static/js/music')
+const Control = require('./static/js/control')
 
 playList = []
 
@@ -24,7 +26,7 @@ var openFileBtnEvent = function () {
 
             playList.push(path);
         }
-        log(playList)
+        log(playList);
     });
 }
 
@@ -34,109 +36,66 @@ var playMusicListener = function () {
     binAll('.li-music', 'click', function (event) {
         var target = event.target;     // 播放列表
         var path = target.dataset.src;
-        music.src = path;
+        // musicObj = new Music('#id-audio-player');
+        // musicObj.setSrc(path);
+        musicObj = new Music(path);
     })
 }
 
 
-// 音乐播放
-var musicPlay = function () {
-    var playIcon = e('#id-icon-play');
-    var pauseIcon = e('#id-icon-pause');
-    music.play();
-    playIcon.classList.add('hidden');
-    pauseIcon.classList.remove('hidden')
 
+// 音乐播放
+var musicCanPlayEvent = function () {
+    musicObj.play();
 }
 
 // 音乐暂停
-var musicPause = function() {
-    var playIcon = e('#id-icon-play');
-    var pauseIcon = e('#id-icon-pause');
-    music.pause();
-    playIcon.classList.remove('hidden');
-    pauseIcon.classList.add('hidden');
-}
-
-// 音乐静音
-var musicVolume = function() {
-    var volumeIcon = e('#id-icon-volume');
-    var muteIcon = e('#id-icon-mute');
-    music.muted = false;
-    volumeIcon.classList.remove('hidden');
-    muteIcon.classList.add('hidden');
-}
-
-// 音乐静音
-var musicMute = function() {
-    var volumeIcon = e('#id-icon-volume');
-    var muteIcon = e('#id-icon-mute');
-    music.muted = true;
-    volumeIcon.classList.add('hidden');
-    muteIcon.classList.remove('hidden');
-}
-
-
-
-// music can play
-var musicCanPlayEvent = function () {
-    musicPlay();
-}
-
-// music pause
 var musicPauseEvent = function () {
-    musicPause();
+    musicObj.pause();
 }
 
 // playIcon click evnet
 var playIconClickEvent = function (event) {
     var target = event.target;
-    if (music.paused || music.ended) {
-        musicPlay();
+    var isPaused = musicObj.isPaused();
+    var isEnded = musicObj.isEnded();
+
+    if ( isPaused || isEnded ) {
+        musicObj.play();
     }
 }
 
 // pauseIcon click event
 var pauseIconClickEvent = function () {
     var target = event.target;
-    if (!music.paused) {
-        musicPause();
+    var isPaused = musicObj.isPaused();
+
+    if (!isPaused) {
+        musicObj.pause();
     }
     
 }
 
-//
+// 音乐静音
 var volumeIconClickEvent = function () {
-    musicMute();
-
-    var currentBar = e('#id-current-volume');
-    currentBar.style.width = 0 + 'px';
-
-
+    musicObj.mute();
+    ctrol.setVolumeBarZero()
 }
 
-//
+
 var muteIconClickEvent = function () {
-    musicVolume();
+    var volume = musicObj.getVolume();
 
-    var totalBar = e('#id-total-volume');
-    var currentBar = e('#id-current-volume');
-    var totalVolume = totalBar.clientWidth;
+    musicObj.unmute();
+    ctrol.setVolumeBar(volume);
 
-    var css = music.volume * totalVolume
-    currentBar.style.width = css + 'px';
 }
 
 // 播放进度条
 var processPlayBar = function (curTime, totalTime) {
-    var totalBar = e('#id-total-music');
-    var playedBar = e('#id-played-music');
+    var played = curTime / totalTime;
+    ctrol.setPlayBar(played);
 
-    var width = totalBar.clientWidth;
-    var played = curTime / totalTime * width;
-    var css = played + 'px'
-
-    playedBar.style.width = css
 }
 
 // 播放时间
@@ -151,8 +110,8 @@ var processPlayTxt = function (curTime, totalTime) {
 
 // 定时刷新任务
 var processPlayedEvent = function () {
-    var interval = 500;
-
+    var interval = 500;  // 单位 ms
+    var music = musicObj.music;
 
     setInterval(function(){
         var totalTime = (music.duration / 60).toFixed(2);
@@ -168,76 +127,88 @@ var processPlayedEvent = function () {
 // 点击播放进度条
 var musicProcessBarEvent = function (event) {
     var target = event.target;
-    var totalBar = e('#id-total-music');
-    var width = totalBar.clientWidth;
+    var width = ctrol.totalPlayWith;
     var offsetX = event.offsetX;
 
-    music.currentTime = offsetX / width * music.duration;
+    musicObj.setCurrentTime(offsetX / width);
 
 }
 
-
 var initVolumeProcessBar = function () {
+    var music = e('#id-audio-player');
     var totalBar = e('#id-total-volume');
     var currentBar = e('#id-current-volume');
     var totalVolume = totalBar.clientWidth;
     var currentVolume = currentBar.clientWidth;
+    var defaultSrc = music.querySelector('source').src.split('file://').pop()
+    var decdefault = decodeURI(defaultSrc);
+    var volume =  currentVolume / totalVolume;
 
-    music.volume = currentVolume / totalVolume;
+    musicObj = new Music(defaultSrc);
+    musicObj.setVolume(volume);
+
+    playList.push(decdefault)
 }
+
 
 // 音量进度条
 var volumeProcessBarEvent = function (event) {
-    var currentBar = e('#id-current-volume');
     var target = event.target;
-    var totalBar = e('#id-total-volume');
-    var totalVolume = totalBar.clientWidth;
-    var offsetX = event.offsetX;
 
-    music.volume = offsetX / totalVolume;
-    currentBar.style.width = offsetX + 'px';
+    var totalVolume = ctrol.totalVolume;
+    var offsetX = event.offsetX;
+    var volume = offsetX / totalVolume
+
+    ctrol.setVolumeBar(volume);
+    musicObj.setVolume(volume);
+
 
 }
 
 // 上一首
 var backIconClickEvent = function () {
-    var currSrc = music.currentSrc.split('file://').pop();
-    var encurrSrc = decodeURI(currSrc)
+    var currSrc = musicObj.getCurrentSrc();
+
     var next = 0;
     var len = playList.length;
     for (var i = 0; i < len; i++) {
         var source = playList[i];
-        if (source == encurrSrc) {
+        if (source == currSrc) {
             next = i == 0 ? len - 1 : i - 1 ;
             break;
         }
     }
 
-    music.src = playList[next];
+    var next_song = playList[next];
+    musicObj.setSrc(next_song);
 }
 
 // 下一首
 var forwardIconClickEvent = function () {
-    var currSrc = music.currentSrc.split('file://').pop();
-    var encurrSrc = decodeURI(currSrc)
+    var currSrc = musicObj.getCurrentSrc();
+
     var next = 0;
     var len = playList.length;
     for (var i = 0; i < len; i++) {
         var source = playList[i];
-        if (source == encurrSrc) {
+        if (source == currSrc) {
             next = i == len - 1 ? 0 : i + 1 ;
             break;
         }
     }
 
-    music.src = playList[next];
+    var next_song = playList[next];
+    musicObj.setSrc(next_song);
     
 }
 
 
 // 监听事件
 var addListeners = function () {
-    music = e('#id-audio-player');   // 播放控件
+
+    initVolumeProcessBar();   // 初始化音量
+    ctrol = new Control();
+
     var playIcon = e('#id-icon-play');
     var pauseIcon = e('#id-icon-pause');
     var volumeIcon = e('#id-icon-volume');
@@ -248,15 +219,8 @@ var addListeners = function () {
     var backIcon = e('#id-icon-play-back');
     var forwardIcon = e('#id-icon-play-forward');
 
-    var defaultSrc = music.querySelector('source').src.split('file://').pop()
-    playList.push(defaultSrc)
-
-
-
-    initVolumeProcessBar();   // 初始化音量
-    music.addEventListener('canplay', musicCanPlayEvent);
-    music.addEventListener('ended', musicPauseEvent);
-
+    musicObj.music.addEventListener('canplay', musicCanPlayEvent);
+    musicObj.music.addEventListener('ended', musicPauseEvent);
 
     backIcon.addEventListener('click', backIconClickEvent);
     forwardIcon.addEventListener('click', forwardIconClickEvent);
@@ -268,7 +232,6 @@ var addListeners = function () {
     volumeProcessBar.addEventListener('click', volumeProcessBarEvent);
 
     openFileBtn.addEventListener('click', openFileBtnEvent);
-
 
     // 定时刷新任务
     processPlayedEvent();
