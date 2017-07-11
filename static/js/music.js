@@ -38,7 +38,7 @@ class Music{
     mute() {
         var volumeIcon = e('#id-icon-volume');
         var muteIcon = e('#id-icon-mute');
-        music.muted = true;
+        this.music.muted = true;
         volumeIcon.classList.add('hidden');
         muteIcon.classList.remove('hidden');
     }

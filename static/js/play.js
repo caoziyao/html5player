@@ -206,7 +206,6 @@ var forwardIconClickEvent = function () {
 // 监听事件
 var addListeners = function () {
 
-    initVolumeProcessBar();   // 初始化音量
     ctrol = new Control();
 
     var playIcon = e('#id-icon-play');
@@ -242,7 +241,10 @@ var addListeners = function () {
 
 // 程序入口
 var __main = function () {
+    initVolumeProcessBar();   // 初始化音量
+
     addListeners();
+
 }
 
 window.onload = function () {
@@ -250,21 +252,6 @@ window.onload = function () {
 }
 
 
-
-
-//
-//
-// // var musicList = es('.ul-music')
-// // log('mjusiclist', musicList)
-// binAll('.ul-music', 'click', function(event){
-//   log('all click')
-//   var self = event.target
-//   var src = self.dataset.src
-//   var path = 'music/' + src
-//   a.src = path
-// })
-
-//
 //
 // var sunplay = function() {
 //   var nextSong = 0
@@ -280,8 +267,7 @@ window.onload = function () {
 //
 //   })
 // }
-//
-// //
+
 // var randPlay = function() {
 //   var nextSong = 0
 //   var list = ['1.mp3', '2.mp3', '3.mp3']
