@@ -8,7 +8,27 @@ class Music{
         let ele = '#id-audio-player';
 
         this.music = e(ele);
-        this.setSrc(path);
+        if (path != undefined) {
+            this.setSrc(path);
+        }
+
+    }
+
+
+    initVolume () {
+        var music = e('#id-audio-player');
+        var totalBar = e('#id-total-volume');
+        var currentBar = e('#id-current-volume');
+        var totalVolume = totalBar.clientWidth;
+        var currentVolume = currentBar.clientWidth;
+        var defaultSrc = music.querySelector('source').src.split('file://').pop()
+        var decdefault = decodeURI(defaultSrc);
+        var volume =  currentVolume / totalVolume;
+
+        // music.volume = volume;
+        playList.push(decdefault);
+        this.setVolume(volume);
+
     }
 
     play() {
@@ -66,6 +86,10 @@ class Music{
         return decodeURI(src);
     }
 
+    getCurrentTime() {
+        return this.music.currentTime;
+    }
+
 
     setCurrentTime(cur) {
         this.music.currentTime = cur * this.getDuration();
@@ -79,6 +103,10 @@ class Music{
 
     setSrc(src) {
         this.music.src = src;
+    }
+
+    registerMusicEvent(type, listener) {
+        this.music.addEventListener(type, listener);
     }
 
 

@@ -1,6 +1,6 @@
 const file = require('./static/js/file')
 const Music = require('./static/js/music')
-const Control = require('./static/js/control')
+const Compt = require('./static/js/components')
 
 playList = []
 
@@ -79,7 +79,7 @@ var pauseIconClickEvent = function () {
 // 音乐静音
 var volumeIconClickEvent = function () {
     musicObj.mute();
-    ctrol.setVolumeBarZero()
+    compt.setVolumeBarZero()
 }
 
 
@@ -87,14 +87,14 @@ var muteIconClickEvent = function () {
     var volume = musicObj.getVolume();
 
     musicObj.unmute();
-    ctrol.setVolumeBar(volume);
+    compt.setVolumeBar(volume);
 
 }
 
 // 播放进度条
 var processPlayBar = function (curTime, totalTime) {
     var played = curTime / totalTime;
-    ctrol.setPlayBar(played);
+    compt.setPlayBar(played);
 
 }
 
@@ -108,58 +108,29 @@ var processPlayTxt = function (curTime, totalTime) {
 }
 
 
-// 定时刷新任务
-var processPlayedEvent = function () {
-    var interval = 500;  // 单位 ms
-    var music = musicObj.music;
 
-    setInterval(function(){
-        var totalTime = (music.duration / 60).toFixed(2);
-        var curTime = (music.currentTime / 60).toFixed(2);
-        // 播放进度条
-        processPlayBar(curTime, totalTime);
-        // 时间显示
-        processPlayTxt(curTime, totalTime);
-    }, interval)
-
-}
 
 // 点击播放进度条
 var musicProcessBarEvent = function (event) {
     var target = event.target;
-    var width = ctrol.totalPlayWith;
+    var width = compt.totalPlayWith;
     var offsetX = event.offsetX;
 
     musicObj.setCurrentTime(offsetX / width);
 
 }
 
-var initVolumeProcessBar = function () {
-    var music = e('#id-audio-player');
-    var totalBar = e('#id-total-volume');
-    var currentBar = e('#id-current-volume');
-    var totalVolume = totalBar.clientWidth;
-    var currentVolume = currentBar.clientWidth;
-    var defaultSrc = music.querySelector('source').src.split('file://').pop()
-    var decdefault = decodeURI(defaultSrc);
-    var volume =  currentVolume / totalVolume;
-
-    musicObj = new Music(defaultSrc);
-    musicObj.setVolume(volume);
-
-    playList.push(decdefault)
-}
 
 
 // 音量进度条
 var volumeProcessBarEvent = function (event) {
     var target = event.target;
 
-    var totalVolume = ctrol.totalVolume;
+    var totalVolume = compt.totalVolume;
     var offsetX = event.offsetX;
     var volume = offsetX / totalVolume
 
-    ctrol.setVolumeBar(volume);
+    compt.setVolumeBar(volume);
     musicObj.setVolume(volume);
 
 
@@ -206,42 +177,52 @@ var forwardIconClickEvent = function () {
 // 监听事件
 var addListeners = function () {
 
-    ctrol = new Control();
+    musicObj.registerAllEvent =  () => {
+        musicObj.registerMusicEvent('canplay', musicCanPlayEvent);
+        musicObj.registerMusicEvent('ended', musicPauseEvent);
+    }
 
-    var playIcon = e('#id-icon-play');
-    var pauseIcon = e('#id-icon-pause');
-    var volumeIcon = e('#id-icon-volume');
-    var muteIcon = e('#id-icon-mute');
-    var openFileBtn = e('#id-open-file');  // 打开
-    var musicProcessBar = e('#id-control-bar'); // 播放进度条
-    var volumeProcessBar = e('#id-volume-bar'); // 音乐进度条
-    var backIcon = e('#id-icon-play-back');
-    var forwardIcon = e('#id-icon-play-forward');
 
-    musicObj.music.addEventListener('canplay', musicCanPlayEvent);
-    musicObj.music.addEventListener('ended', musicPauseEvent);
+    compt.registerAllEvent =  () => {
+        compt.registerEvent('#id-icon-play', 'click', playIconClickEvent);
+        compt.registerEvent('#id-icon-play-back', 'click', backIconClickEvent);
+        compt.registerEvent('#id-icon-play-forward', 'click', forwardIconClickEvent);
+        compt.registerEvent('#id-icon-pause', 'click', pauseIconClickEvent);
+        compt.registerEvent('#id-icon-volume', 'click', volumeIconClickEvent);
+        compt.registerEvent('#id-icon-mute', 'click', muteIconClickEvent);
+        compt.registerEvent('#id-open-file', 'click', openFileBtnEvent);
+        compt.registerEvent('#id-control-bar', 'click', musicProcessBarEvent);
+        compt.registerEvent('#id-volume-bar', 'click', volumeProcessBarEvent);
 
-    backIcon.addEventListener('click', backIconClickEvent);
-    forwardIcon.addEventListener('click', forwardIconClickEvent);
-    playIcon.addEventListener('click', playIconClickEvent);
-    pauseIcon.addEventListener('click', pauseIconClickEvent);
-    volumeIcon.addEventListener('click', volumeIconClickEvent);
-    muteIcon.addEventListener('click', muteIconClickEvent);
-    musicProcessBar.addEventListener('click', musicProcessBarEvent);
-    volumeProcessBar.addEventListener('click', volumeProcessBarEvent);
+    }
 
-    openFileBtn.addEventListener('click', openFileBtnEvent);
+    compt.registerAllEvent();
+    musicObj.registerAllEvent();
+
 
     // 定时刷新任务
-    processPlayedEvent();
-
+    var interval = 500;  // 单位 ms
+    setInterval(function(){
+        var duration = musicObj.getDuration();
+        var currentTime = musicObj.getCurrentTime();
+        var totalTime = (duration / 60).toFixed(2);
+        var curTime = (currentTime / 60).toFixed(2);
+        // 播放进度条
+        processPlayBar(curTime, totalTime);
+        // 时间显示
+        processPlayTxt(curTime, totalTime);
+    }, interval)
 
 }
 
 
 // 程序入口
 var __main = function () {
-    initVolumeProcessBar();   // 初始化音量
+
+    musicObj = new Music();
+    compt = new Compt();
+
+    musicObj.initVolume()
 
     addListeners();
 

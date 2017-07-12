@@ -3,7 +3,7 @@
  */
 
 
-class Ctrol {
+class Components {
     constructor() {
         const eleCurVolumeBar = '#id-current-volume';
         const eleTotalVolumeBar = '#id-total-volume';
@@ -40,11 +40,18 @@ class Ctrol {
         var width = this.totalPlayWith
         var css = played * width + 'px'
 
-        ctrol.curPlayBar.style.width = css
+        this.curPlayBar.style.width = css
     }
+
+    registerEvent(element, type, listener) {
+        let ele = e(element);
+        ele.addEventListener(type, listener);
+    }
+
+
 
 
 }
 
 
-module.exports = Ctrol;
+module.exports = Components;
