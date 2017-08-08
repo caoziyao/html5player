@@ -27,9 +27,6 @@ class File {
 
     }
 
-    test() {
-        log('hello')
-    }
 }
 
 

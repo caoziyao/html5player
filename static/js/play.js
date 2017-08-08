@@ -117,6 +117,7 @@ var musicProcessBarEvent = function (event) {
     var offsetX = event.offsetX;
 
     musicObj.setCurrentTime(offsetX / width);
+    compt.setPlayBar(offsetX / width);
 
 }
 

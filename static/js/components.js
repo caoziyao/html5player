@@ -32,6 +32,8 @@ class Components {
     setVolumeBar(volume) {
         // 音量 0-1
         var css = volume * this.totalVolume;
+
+        this.curVolumeBar.style.transition = '0.2s'
         this.curVolumeBar.style.width = css + 'px';
     }
 
@@ -40,6 +42,7 @@ class Components {
         var width = this.totalPlayWith
         var css = played * width + 'px'
 
+        this.curPlayBar.style.transition = '0.2s'
         this.curPlayBar.style.width = css
     }
 
@@ -47,9 +50,6 @@ class Components {
         let ele = e(element);
         ele.addEventListener(type, listener);
     }
-
-
-
 
 }
 
