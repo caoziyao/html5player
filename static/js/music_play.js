@@ -2,16 +2,18 @@
  * Created by cczy on 2017/7/12.
  */
 
-
-class Music{
+class MusicPlay{
     constructor(path) {
         let ele = '#id-audio-player';
+        // this.music = _e(ele);
+        // if (path != undefined) {
+        //     this.setSrc(path);
+        // }
 
-        this.music = e(ele);
-        if (path != undefined) {
-            this.setSrc(path);
-        }
+    }
 
+    static new(...args) {
+        return new this(...args)
     }
 
 
@@ -108,9 +110,6 @@ class Music{
     registerMusicEvent(type, listener) {
         this.music.addEventListener(type, listener);
     }
-
-
 }
 
-
-module.exports = Music;
+module.exports = MusicPlay;

@@ -1,8 +1,9 @@
-const file = require('./static/js/file')
-const Music = require('./static/js/music')
-const Compt = require('./static/js/components')
+// const file = require('./static/js/file')
+const MusicPlay = require('./static/js/music_play')
+// const Compt = require('./static/js/components')
+const PlayList = require('./static/js/play_list')
 
-playList = []
+// playList = []
 
 
 // 添加播放列表
@@ -73,7 +74,7 @@ var pauseIconClickEvent = function () {
     if (!isPaused) {
         musicObj.pause();
     }
-    
+
 }
 
 // 音乐静音
@@ -171,7 +172,7 @@ var forwardIconClickEvent = function () {
 
     var next_song = playList[next];
     musicObj.setSrc(next_song);
-    
+
 }
 
 
@@ -218,46 +219,15 @@ var addListeners = function () {
 
 
 // 程序入口
-var __main = function () {
+const __main = function () {
+    let playList = PlayList.new()
+    // 渲染播放列表
+    playList.renderPlayList('#id-play-list')
 
-    musicObj = new Music();
-    compt = new Compt();
-
-    musicObj.initVolume()
-
-    addListeners();
+    let music = MusicPlay.new()
 
 }
 
 window.onload = function () {
   __main()
 }
-
-
-//
-// var sunplay = function() {
-//   var nextSong = 0
-//   var list = ['1.mp3', '2.mp3', '3.mp3']
-//   a.addEventListener('ended', function(){
-//     nextSong = nextSong + 1
-//     if(nextSong == 2) {
-//       nextSong = 0
-//     }
-//     log('i', nextSong)
-//     var path = 'music/' + list[nextSong]
-//     a.src = path
-//
-//   })
-// }
-
-// var randPlay = function() {
-//   var nextSong = 0
-//   var list = ['1.mp3', '2.mp3', '3.mp3']
-//   a.addEventListener('ended', function(){
-//     nextSong = Math.floor(Math.random()*(3-0)+0)
-//     log('i', nextSong)
-//     var path = 'music/' + list[nextSong]
-//     a.src = path
-//   })
-// }
-//
