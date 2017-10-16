@@ -1,4 +1,5 @@
 music/*
+static/lib/*
 static/image/*
 .idea/*
 cover/*

@@ -22,7 +22,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({width: 1000, height: 700});
 
     // 加载应用的 index.html。
-    mainWindow.loadURL(`file://${__dirname}/musicplayer.html`);
+    mainWindow.loadURL(`file://${__dirname}/player.html`);
 
     // 启用开发工具。
     mainWindow.webContents.openDevTools();

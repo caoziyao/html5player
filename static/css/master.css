@@ -3,266 +3,35 @@
   margin: 0px;
 }
 
-body {
-    /*width: 1200px;*/
+html, body{
+    height: 100%;
+    width: 100%;
 }
 
 .hidden {
   display: none;
 }
 
-.music-body {
-  width: 1000px;
-  height: 668px;
-  margin: 0 auto;
-}
 ul li {
   list-style-type: none;
   cursor: pointer;
 }
 
-.header {
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  width: 1000px;
-  height: 60px;
-  background-color: #ac3319;
+
+.body {
+    height: 100%;
+    display: flex;
 }
 
-/* items */
-.header-items {
-  /*display: inline-block;*/
-  /*margin-top: 30px;*/
-}
-
-/* title */
-.header-title {
-  margin-top: 10px;
-}
-
-.title-font {
-  color: white;
-}
-
-/* search */
-.header-search {
-  width: 233px;
-  margin: 10px auto;
+.music-nav {
+    background-image: url('../image/image1.jpg');
+    /*background-repeat: repeat;*/
+    width: 30%;
+    height: 100%;
+    color: white;
 
 }
-
-.search-input {
-  width: 233px;
-  border-radius: 20px;
-  height: 26px;
-  text-align: center;
-  outline: none;
-
-}
-
-/* message */
-.header-imessage {
-  width: 250px;
-}
-
-
-/* main */
-.main {
-  width: 1000px;
-  height: 550px;
-  display: flex;
-}
-
-/* main-nav */
-.main-nav {
-  width: 25%;
-  height: 550px;
-  background-color: #f6f6f6;
-  /*display: inline-block;*/
-
-}
-
-.main-nav-open {
-  margin-top: 5px;
-  margin-left: 10px;
-}
-
-.main-nav-open a {
-  text-decoration: none;
-}
-
-#id-open-file {
-  color: black;
-}
-
-.open-file-icon {
-  width: 20px;
-  height: 20px;
-  position: relative;
-  top: 5px;
-  margin-right: 5px;
-}
-
-.bg {
-  background: #000 url("../icon/background.jpg") no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-/* main-content */
-.main-content {
-  width: 75%;
-  height: 550px;
-  /*background-color: #fafafa;*/
-  /*background-color: #bcbdbb;*/
-  /*display: inline-block;*/
-  display: flex;
-}
-
-
-.content-left-image {
-  margin-top: 60px;
-  margin-left: 60px;
-  margin-right: 60px;
-}
-
-.content-image {
-  width: 230px;
-  height: 230px;
-  border-radius: 50%;
-}
-
-.music-list {
-  /*display: inline-block;*/
-  width: 216px;
-  margin: 0 auto;
-  height: 450px;
-  overflow: auto;
-}
-
-.li-music {
-  margin-top: 5px;
-}
-
-.li-music:hover {
-  background-color: #e1e1e1;
-}
-
-.content-right-header {
-  margin-top: 30px;
-}
-
-.content-right-lyric {
-  width: 300px;
-  overflow: auto;
-}
-
-/*main-split*/
-.main-split {
-  display: inline-block;
-  width: 0px;
-  height: 550px;
-}
-
-
-/* footer */
-.footer {
-  width: 1000px;
-  height: 66px;
-  background-color: #f6f6f6;
-}
-
-
-/* ctrol */
-.play-control {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  display: flex;
-}
-.icon {
-  width: 35px;
-  height: 35px;
-  /*border-radius: 50%;*/
-
-}
-.play-control img {
-  margin-right: 25px;
-}
-
-.play-control img:hover{
-  cursor: pointer;
-}
-
-#id-control-bar {
-  width: 400px;
-  height: 5px;
-  margin-top: 15px;
-  margin-right: 25px;
-}
-
-#id-control-bar:hover {
-  cursor: pointer;
-}
-
-#id-total-music {
-  display: inline-block;
-  width: 400px;
-  background-color: #afafaf;
-  height: 5px;
-  opacity:0.5;
-  position: absolute;
-}
-
-#id-played-music {
-  display: inline-block;
-  width: 0px;
-  height: 5px;
-  background-color: #c93027;
-  z-index: 2;
-  position: absolute;
-}
-
-.play-time {
-  margin-right: 25px;
-}
-
-/* music volume */
-
-#id-volume-bar {
-  display: inline-block;
-  width: 100px;
-  background-color: #afafaf;
-  height: 5px;
-  /*opacity:0.7;*/
-  /*position: absolute;*/
-  margin-top: 13px;
-  margin-left: -15px;
-  margin-right: 15px;
-}
-
-#id-volume-bar:hover {
-  cursor: pointer;
-}
-
-
-#id-total-volume {
-  display: inline-block;
-  width: 100px;
-  background-color: #afafaf;
-  height: 5px;
-  opacity:0.2;
-  position: absolute;
-}
-
-#id-current-volume {
-  display: inline-block;
-  width: 50px;
-  height: 5px;
-  background-color: #c93027;
-  z-index: 2;
-  position: absolute;
+.music-main {
+    /*background-color: ;*/
+    width: 70%;
 }
