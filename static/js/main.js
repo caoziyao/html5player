@@ -220,9 +220,20 @@ var addListeners = function () {
 
 // 程序入口
 const __main = function () {
-    let playList = PlayList.new()
+    let list = [
+        ['abc1', 'music/1.mp3'],
+        ['abc2', 'music/2.mp3'],
+        ['abc4', 'music/3.mp3'],
+        ['abc4', 'music/4.mp3'],
+        ['成都', 'music/成都.mp3'],
+        ['匆匆那年', 'music/匆匆那年.mp3'],
+        ['刚好遇见你', 'music/刚好遇见你.mp3'],
+        ['童话镇', 'music/童话镇.mp3'],
+    ]
+
+    let playList = PlayList.new(list)
     // 渲染播放列表
-    playList.renderPlayList('#id-play-list')
+    playList.renderPlayList()
 
     let music = MusicPlay.new()
     music.play()

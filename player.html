@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="static/css/master.css">
     <!-- <script src="static/lib/layui/layui.js"></script> -->
+    <!-- css 相关文件 -->
+   <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.min.css">
     <script src="static/js/utils.js"></script>
     <script src="static/js/main.js"></script>
 
@@ -23,21 +25,26 @@
                 <ul id="id-play-list">
                 </ul>
             </div>
-            <div class="nav-control">
-                <button id="id-play-btn" name="button">play</button>
+
+            <div class="music-control">
+                <i class="fa fa-random fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-backward fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-play fa-2x" aria-hidden="true"></i>
+                <i id="id-play-btn" class="fa fa-pause fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-stop fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-forward fa-2x" aria-hidden="true"></i>
             </div>
         </div>
-
         <div class="music-main">
             <div class="">
                 abc
             </div>
         </div>
 
-        <audio id="id-audio-player" >
-            <source src="music/1.mp3" type="audio/mpeg" >
-         </audio>
-
     </div>
+    <audio id="id-audio-player" >
+        <source src="music/1.mp3" type="audio/mpeg" >
+     </audio>
+
   </body>
 </html>

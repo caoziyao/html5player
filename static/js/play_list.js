@@ -1,21 +1,17 @@
 const MusicPlay = require('./music_play')
 
 class PlayList{
-    constructor(path) {
-        this.init()
+    constructor(list) {
+        this.setup(list)
     }
 
     static new(...args) {
         return new this(...args)
     }
 
-    init() {
-        this.playList = [
-            ['abc', 'music/1.mp3'],
-            ['abc1', 'music/2.mp3'],
-            ['abc2', 'music/3.mp3'],
-            ['abc3', 'music/4.mp3'],
-        ]
+    setup(list) {
+        this.element = '#id-play-list'
+        this.playList = list
     }
 
     template(item) {
@@ -28,10 +24,10 @@ class PlayList{
         return t
     }
 
-    renderPlayList(element) {
+    renderPlayList() {
         // 生成歌单
         // element 歌单列表Id
-        let e = _e(element)
+        let e = _e(this.element)
 
         for (let i = 0; i < this.playList.length; i++) {
             let item = this.playList[i]
@@ -48,6 +44,7 @@ class PlayList{
         binAll('.play-list-li', 'click', (event) => {
             let target = event.target
             let path = target.dataset.path
+            log('path', path)
             music.setSrc(path)
             music.play()
         })
