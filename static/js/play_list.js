@@ -1,3 +1,4 @@
+const MusicPlay = require('./music_play')
 
 class PlayList{
     constructor(path) {
@@ -10,10 +11,10 @@ class PlayList{
 
     init() {
         this.playList = [
-            ['abc', '../../music/1.mp3'],
-            ['abc1', 'music/1.mp3'],
-            ['abc2', 'music/1.mp3'],
-            ['abc3', 'music/1.mp3'],
+            ['abc', 'music/1.mp3'],
+            ['abc1', 'music/2.mp3'],
+            ['abc2', 'music/3.mp3'],
+            ['abc3', 'music/4.mp3'],
         ]
     }
 
@@ -22,7 +23,7 @@ class PlayList{
         let name = item[0]
         let path = item[1]
         let t = `
-            <li data-path=${path}>${name}</li>
+            <li class="play-list-li" data-path=${path}>${name}</li>
         `
         return t
     }
@@ -35,9 +36,21 @@ class PlayList{
         for (let i = 0; i < this.playList.length; i++) {
             let item = this.playList[i]
             let t = this.template(item)
-            e.insertAdjacentHTML('beforeBegin', t)
+            e.insertAdjacentHTML('beforeend', t)
         }
 
+        this.addListeners()
+    }
+
+    addListeners() {
+        // 添加点击播放事件
+        let music = MusicPlay.new()
+        binAll('.play-list-li', 'click', (event) => {
+            let target = event.target
+            let path = target.dataset.path
+            music.setSrc(path)
+            music.play()
+        })
     }
 }
 

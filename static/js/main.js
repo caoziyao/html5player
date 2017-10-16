@@ -225,6 +225,7 @@ const __main = function () {
     playList.renderPlayList('#id-play-list')
 
     let music = MusicPlay.new()
+    music.play()
 
 }
 

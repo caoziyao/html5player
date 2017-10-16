@@ -1,31 +1,28 @@
-const log = function() {
-  console.log.apply(console, arguments)
-}
 
-// const log = console.log.bind(console)
+const log = console.log.bind(console)
 
-const _e = function(sel) {
+const _e = (sel) => {
   return document.querySelector(sel)
 }
 
-const _es = function(sel) {
+const _es = (sel) => {
   return document.querySelectorAll(sel)
 }
 
-const bindEvent = function(element, eventName, callback) {
+const bindEvent = (element, eventName, callback) => {
   element.addEventListener(eventName, callback)
 }
 
-const binAll = function(selector, eventName, callback) {
-  var elements = document.querySelectorAll(selector)
-  for(var i=0; i<elements.length; i++) {
-    var e = elements[i]
+const binAll = (selector, eventName, callback) => {
+  let es = document.querySelectorAll(selector)
+  for(var i=0; i<es.length; i++) {
+    var e = es[i]
     bindEvent(e, eventName, callback)
   }
 }
 
 // localStorage
-const showStorage = function (storage) {
+const showStorage = (storage) => {
   for (var i = 0; i < storage.length; i++) {
     var key = storage.key(i);
     var item = storage.getItem(key);

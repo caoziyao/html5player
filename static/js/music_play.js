@@ -2,18 +2,28 @@
  * Created by cczy on 2017/7/12.
  */
 
+
 class MusicPlay{
-    constructor(path) {
-        let ele = '#id-audio-player';
-        // this.music = _e(ele);
-        // if (path != undefined) {
-        //     this.setSrc(path);
-        // }
+    constructor() {
+        this.setup()
 
     }
 
     static new(...args) {
-        return new this(...args)
+        this.i = this.i ||  new this(...args)
+        return this.i
+    }
+
+    setup() {
+        let ele = '#id-audio-player';
+        let path = 'music/1.mp3'
+        this.music = _e(ele);
+        this.setSrc(path)
+    }
+
+
+    setSrc(src) {
+        this.music.src = src;
     }
 
 
@@ -34,19 +44,22 @@ class MusicPlay{
     }
 
     play() {
-        var playIcon = e('#id-icon-play');
-        var pauseIcon = e('#id-icon-pause');
+        let self = this
+
         this.music.play();
-        playIcon.classList.add('hidden');
-        pauseIcon.classList.remove('hidden')
+        // var playIcon = e('#id-icon-play');
+        // var pauseIcon = e('#id-icon-pause');
+
+        // playIcon.classList.add('hidden');
+        // pauseIcon.classList.remove('hidden')
     }
 
     pause() {
-        var playIcon = e('#id-icon-play');
-        var pauseIcon = e('#id-icon-pause');
+        // var playIcon = e('#id-icon-play');
+        // var pauseIcon = e('#id-icon-pause');
         this.music.pause();
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
+        // playIcon.classList.remove('hidden');
+        // pauseIcon.classList.add('hidden');
     }
 
     unmute() {
@@ -100,11 +113,6 @@ class MusicPlay{
     setVolume(cur) {
         // 音量 0-1
         this.music.volume = cur;
-    }
-
-
-    setSrc(src) {
-        this.music.src = src;
     }
 
     registerMusicEvent(type, listener) {
