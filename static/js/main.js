@@ -2,7 +2,7 @@
 const MusicPlay = require('./static/js/music_play')
 // const Compt = require('./static/js/components')
 const PlayList = require('./static/js/play_list')
-
+const ControlButton = require('./static/js/control_button')
 // playList = []
 
 
@@ -217,9 +217,7 @@ var addListeners = function () {
 
 }
 
-
-// 程序入口
-const __main = function () {
+const init = () =>  {
     let list = [
         ['abc1', 'music/1.mp3'],
         ['abc2', 'music/2.mp3'],
@@ -235,6 +233,15 @@ const __main = function () {
     // 渲染播放列表
     playList.renderPlayList()
 
+    // 控制播放按钮
+    let controlBtn = ControlButton.new()
+    controlBtn.addListeners()
+
+}
+
+// 程序入口
+const __main = function () {
+    init()
     let music = MusicPlay.new()
     music.play()
 
