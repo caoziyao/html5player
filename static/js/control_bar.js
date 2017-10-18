@@ -3,7 +3,7 @@
  */
 
 
-class Components {
+class ControlBar {
     constructor() {
         const eleCurVolumeBar = '#id-current-volume';
         const eleTotalVolumeBar = '#id-total-volume';

@@ -42,6 +42,20 @@ class MusicPlay{
         this.setVolume(volume);
 
     }
+    stop() {
+
+    }
+    backward() {
+
+    }
+
+    forward() {
+
+    }
+
+    random() {
+    
+    }
 
     play() {
         let self = this
