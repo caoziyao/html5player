@@ -6,6 +6,7 @@ const PlayList = require('./play_list')
 class MusicPlay{
     constructor() {
         this.setup()
+        this.setupInput()
     }
 
     static new(...args) {
@@ -18,16 +19,19 @@ class MusicPlay{
         let path = 'music/1.mp3'
         this.music = _e(ele);
         this.setSrc(path)
-
         this.playList = PlayList.new()
         // 播放状态
     }
 
+    setupInput() {
+        this.music.addEventListener('ended', function(){
+            log('接送送啦啦啦')
+        })
+    }
 
     setSrc(src) {
         this.music.src = src;
     }
-
 
     initVolume () {
         var music = e('#id-audio-player');
@@ -139,8 +143,6 @@ class MusicPlay{
         return this.music.ended;
     }
 
-
-
     getVolume() {
         return this.music.volume;
     }
@@ -157,7 +159,6 @@ class MusicPlay{
     getCurrentTime() {
         return this.music.currentTime;
     }
-
 
     setCurrentTime(cur) {
         this.music.currentTime = cur * this.getDuration();

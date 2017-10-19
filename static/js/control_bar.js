@@ -2,7 +2,6 @@
  * Created by cczy on 2017/7/12.
  */
 
-
 class ControlBar {
     constructor() {
         const eleCurVolumeBar = '#id-current-volume';
@@ -54,4 +53,4 @@ class ControlBar {
 }
 
 
-module.exports = Components;
+module.exports = ControlBar;

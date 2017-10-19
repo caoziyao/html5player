@@ -35,8 +35,6 @@ class PlayList{
             let t = this.template(item)
             e.insertAdjacentHTML('beforeend', t)
         }
-
-        // this.addListeners()
     }
 
 }

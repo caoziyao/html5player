@@ -45,6 +45,7 @@ class ControlButton{
     }
 
     pause(music, target) {
+        // 暂停
         if (music.music.paused) {
             // 被暂停，则播放
             target.classList.remove('fa-play')
@@ -60,7 +61,7 @@ class ControlButton{
     }
 
     play(music, target) {
-
+        // 播放
         if (music.music.paused) {
             // 被暂停，则播放
             target.classList.remove('fa-play')

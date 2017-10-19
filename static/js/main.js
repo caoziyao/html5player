@@ -3,33 +3,6 @@ const MusicPlay = require('./static/js/music_play')
 // const Compt = require('./static/js/components')
 const PlayList = require('./static/js/play_list')
 const ControlButton = require('./static/js/control_button')
-// playList = []
-
-
-// 添加播放列表
-var appendHtml = function (filename, url) {
-  var html = `<li class="li-music"><a class="li-music-link" data-src='${url}'>${filename}</a></li>`;
-  var ul = e('.music-list');
-  ul.insertAdjacentHTML('afterBegin', html)
-}
-
-
- // 打开文件
-var openFileBtnEvent = function () {
-    var target = event.target;
-    file.openDailog( (fileNames) => {
-        // log('file', fileNames)
-        for (var i = 0; i < fileNames.length; i++) {
-            var path = fileNames[i];
-            var filename = path.split('/').pop();
-            appendHtml(filename, path);
-            playMusicListener();  // 播放音乐事件
-
-            playList.push(path);
-        }
-        log(playList);
-    });
-}
 
 
 // 播放音乐
@@ -43,17 +16,6 @@ var playMusicListener = function () {
     })
 }
 
-
-
-// 音乐播放
-var musicCanPlayEvent = function () {
-    musicObj.play();
-}
-
-// 音乐暂停
-var musicPauseEvent = function () {
-    musicObj.pause();
-}
 
 // playIcon click evnet
 var playIconClickEvent = function (event) {
@@ -134,65 +96,14 @@ var volumeProcessBarEvent = function (event) {
 
     compt.setVolumeBar(volume);
     musicObj.setVolume(volume);
-
-
 }
-
-// 上一首
-var backIconClickEvent = function () {
-    var currSrc = musicObj.getCurrentSrc();
-
-    var next = 0;
-    var len = playList.length;
-    for (var i = 0; i < len; i++) {
-        var source = playList[i];
-        if (source == currSrc) {
-            next = i == 0 ? len - 1 : i - 1 ;
-            break;
-        }
-    }
-
-    var next_song = playList[next];
-    musicObj.setSrc(next_song);
-}
-
-// 下一首
-var forwardIconClickEvent = function () {
-    var currSrc = musicObj.getCurrentSrc();
-
-    var next = 0;
-    var len = playList.length;
-    for (var i = 0; i < len; i++) {
-        var source = playList[i];
-        if (source == currSrc) {
-            next = i == len - 1 ? 0 : i + 1 ;
-            break;
-        }
-    }
-
-    var next_song = playList[next];
-    musicObj.setSrc(next_song);
-
-}
-
 
 // 监听事件
 var addListeners = function () {
 
-    musicObj.registerAllEvent =  () => {
-        musicObj.registerMusicEvent('canplay', musicCanPlayEvent);
-        musicObj.registerMusicEvent('ended', musicPauseEvent);
-    }
-
-
     compt.registerAllEvent =  () => {
-        compt.registerEvent('#id-icon-play', 'click', playIconClickEvent);
-        compt.registerEvent('#id-icon-play-back', 'click', backIconClickEvent);
-        compt.registerEvent('#id-icon-play-forward', 'click', forwardIconClickEvent);
-        compt.registerEvent('#id-icon-pause', 'click', pauseIconClickEvent);
         compt.registerEvent('#id-icon-volume', 'click', volumeIconClickEvent);
         compt.registerEvent('#id-icon-mute', 'click', muteIconClickEvent);
-        compt.registerEvent('#id-open-file', 'click', openFileBtnEvent);
         compt.registerEvent('#id-control-bar', 'click', musicProcessBarEvent);
         compt.registerEvent('#id-volume-bar', 'click', volumeProcessBarEvent);
 
