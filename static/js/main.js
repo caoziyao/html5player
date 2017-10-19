@@ -217,11 +217,24 @@ var addListeners = function () {
 
 }
 
+const controlBtnEvent = () => {
+    // 添加点击播放事件
+    let music = MusicPlay.new()
+    binAll('.play-list-li', 'click', (event) => {
+        let target = event.target
+        let path = target.dataset.path
+        log('path', path)
+        music.setSrc(path)
+        music.play()
+    })
+
+}
+
 const init = () =>  {
     let list = [
         ['abc1', 'music/1.mp3'],
         ['abc2', 'music/2.mp3'],
-        ['abc4', 'music/3.mp3'],
+        ['abc3', 'music/3.mp3'],
         ['abc4', 'music/4.mp3'],
         ['成都', 'music/成都.mp3'],
         ['匆匆那年', 'music/匆匆那年.mp3'],
@@ -232,10 +245,13 @@ const init = () =>  {
     let playList = PlayList.new(list)
     // 渲染播放列表
     playList.renderPlayList()
+    // 绑定事件
+    controlBtnEvent()
 
     // 控制播放按钮
     let controlBtn = ControlButton.new()
     controlBtn.addListeners()
+
 
 }
 

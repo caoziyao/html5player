@@ -1,12 +1,11 @@
 /**
  * Created by cczy on 2017/7/12.
  */
-
+const PlayList = require('./play_list')
 
 class MusicPlay{
     constructor() {
         this.setup()
-
     }
 
     static new(...args) {
@@ -19,6 +18,9 @@ class MusicPlay{
         let path = 'music/1.mp3'
         this.music = _e(ele);
         this.setSrc(path)
+
+        this.playList = PlayList.new()
+        // 播放状态
     }
 
 
@@ -43,37 +45,74 @@ class MusicPlay{
 
     }
     stop() {
-
+        // 停止播放
+        this.music.currentTime = 0
+        this.music.pause()
     }
     backward() {
+        // 上一首
+        let list = this.playList
+        let name = this.music.dataset.name
+        let index = this.indexOfPlayList(name)
+        // let next = 0
+        if (index == 0) {
+            var next = list.playList.length - 1
+        } else {
+            var next = (index - 1) % list.playList.length
+        }
+        this.setPlayerByIndex(next)
+    }
 
+    indexOfPlayList(name) {
+        // 根据名称查找下标
+        let list = this.playList
+        for (let i = 0; i < list.playList.length; i++) {
+            let l = list.playList[i]
+            if (name === l[0]) {
+                return i
+            }
+        }
+        // 没找到返回 0
+        return 0
+    }
+
+    setPlayerByIndex(index) {
+        // 根据下标设定歌曲
+        let list = this.playList
+        let name = list.playList[index][0]
+        let src = list.playList[index][1]
+        // this.music.src = src
+        this.music.load(src)
+        this.play()
+        // this.music.dataset.name = name
+        this.music.setAttribute('data-name', name)
+        log('src', name, src)
     }
 
     forward() {
-
+        // 下一首
+        let list = this.playList
+        let name = this.music.dataset.name
+        let index = this.indexOfPlayList(name)
+        let next = (index + 1) % list.playList.length
+        this.setPlayerByIndex(next)
     }
 
     random() {
-    
+        // 随机播放
+        let list = this.playList
+        let random = Math.random() * (list.playList.length - 1)
+        let next = Math.floor(random)
+        this.setPlayerByIndex(next)
     }
 
     play() {
         let self = this
-
         this.music.play();
-        // var playIcon = e('#id-icon-play');
-        // var pauseIcon = e('#id-icon-pause');
-
-        // playIcon.classList.add('hidden');
-        // pauseIcon.classList.remove('hidden')
     }
 
     pause() {
-        // var playIcon = e('#id-icon-play');
-        // var pauseIcon = e('#id-icon-pause');
         this.music.pause();
-        // playIcon.classList.remove('hidden');
-        // pauseIcon.classList.add('hidden');
     }
 
     unmute() {

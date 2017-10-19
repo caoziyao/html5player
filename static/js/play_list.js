@@ -1,4 +1,4 @@
-const MusicPlay = require('./music_play')
+// const MusicPlay = require('./music_play')
 
 class PlayList{
     constructor(list) {
@@ -6,7 +6,8 @@ class PlayList{
     }
 
     static new(...args) {
-        return new this(...args)
+        this.i = this.i ||  new this(...args)
+        return this.i
     }
 
     setup(list) {
@@ -35,20 +36,9 @@ class PlayList{
             e.insertAdjacentHTML('beforeend', t)
         }
 
-        this.addListeners()
+        // this.addListeners()
     }
 
-    addListeners() {
-        // 添加点击播放事件
-        let music = MusicPlay.new()
-        binAll('.play-list-li', 'click', (event) => {
-            let target = event.target
-            let path = target.dataset.path
-            log('path', path)
-            music.setSrc(path)
-            music.play()
-        })
-    }
 }
 
 

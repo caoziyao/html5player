@@ -25,31 +25,55 @@ class ControlButton{
         }
     }
 
-    stop(target, music) {
-
+    stop(music, target) {
+        // 停止播放
+        music.stop()
     }
-    backward(target, music) {
-
-    }
-
-    forward(target, music) {
-
+    backward(music, target) {
+        // 上一首
+        music.backward()
     }
 
-    random(target, music) {
-        // music.play()
+    forward(music, target) {
+        // 下一首
+        music.forward()
     }
 
-    pause(target, music) {
-        target.classList.remove('fa-pause')
-        target.classList.add('fa-play')
-        music.pause()
+    random(music, target) {
+        // 随机播放
+        music.random()
     }
 
-    play(target, music) {
-        target.classList.remove('fa-play')
-        target.classList.add('fa-pause')
-        music.play()
+    pause(music, target) {
+        if (music.music.paused) {
+            // 被暂停，则播放
+            target.classList.remove('fa-play')
+            target.classList.add('fa-pause')
+            music.play()
+        } else {
+            // 暂停
+            target.classList.remove('fa-pause')
+            target.classList.add('fa-play')
+            music.pause()
+
+        }
+    }
+
+    play(music, target) {
+
+        if (music.music.paused) {
+            // 被暂停，则播放
+            target.classList.remove('fa-play')
+            target.classList.add('fa-pause')
+            music.play()
+        } else {
+            // 暂停
+            target.classList.remove('fa-pause')
+            target.classList.add('fa-play')
+            music.pause()
+
+        }
+
     }
 
     addListeners() {
@@ -62,7 +86,7 @@ class ControlButton{
             let target = event.target
             let a = target.dataset.action
             let fun = self.actions[a]
-            fun(target, music)
+            fun(music, target)
         })
     }
 }
