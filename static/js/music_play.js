@@ -20,12 +20,20 @@ class MusicPlay{
         this.music = _e(ele);
         this.setSrc(path)
         this.playList = PlayList.new()
-        // 播放状态
+
+        // 循环状态 sequence, random
+        this.cycleType = 'sequence'
     }
 
     setupInput() {
+        let self = this
         this.music.addEventListener('ended', function(){
-            log('接送送啦啦啦')
+            log('播放结束啦')
+            if (self.cycleType == 'sequence') {
+                self.forward()
+            } else {
+                self.random()
+            }
         })
     }
 
@@ -85,8 +93,7 @@ class MusicPlay{
         let list = this.playList
         let name = list.playList[index][0]
         let src = list.playList[index][1]
-        // this.music.src = src
-        this.music.load(src)
+        this.music.src = src
         this.play()
         // this.music.dataset.name = name
         this.music.setAttribute('data-name', name)
@@ -108,6 +115,7 @@ class MusicPlay{
         let random = Math.random() * (list.playList.length - 1)
         let next = Math.floor(random)
         this.setPlayerByIndex(next)
+        this.cycleType = 'random'
     }
 
     play() {
@@ -135,38 +143,13 @@ class MusicPlay{
         muteIcon.classList.remove('hidden');
     }
 
-    isPaused() {
-        return this.music.paused;
-    }
-
-    isEnded() {
-        return this.music.ended;
-    }
-
-    getVolume() {
-        return this.music.volume;
-    }
-
-    getDuration() {
-        return this.music.duration;
-    }
-
     getCurrentSrc() {
-        let src =  this.music.currentSrc.split('file://').pop();
+        let src = this.music.currentSrc.split('file://').pop();
         return decodeURI(src);
-    }
-
-    getCurrentTime() {
-        return this.music.currentTime;
     }
 
     setCurrentTime(cur) {
         this.music.currentTime = cur * this.getDuration();
-    }
-
-    setVolume(cur) {
-        // 音量 0-1
-        this.music.volume = cur;
     }
 
     registerMusicEvent(type, listener) {
