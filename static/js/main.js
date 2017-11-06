@@ -4,7 +4,6 @@ const MusicPlay = require('./static/js/music_play')
 const PlayList = require('./static/js/play_list')
 const ControlButton = require('./static/js/control_button')
 
-
 // 播放音乐
 var playMusicListener = function () {
     binAll('.li-music', 'click', function (event) {
@@ -15,7 +14,6 @@ var playMusicListener = function () {
         musicObj = new Music(path);
     })
 }
-
 
 // playIcon click evnet
 var playIconClickEvent = function (event) {
@@ -36,7 +34,6 @@ var pauseIconClickEvent = function () {
     if (!isPaused) {
         musicObj.pause();
     }
-
 }
 
 // 音乐静音
@@ -51,7 +48,6 @@ var muteIconClickEvent = function () {
 
     musicObj.unmute();
     compt.setVolumeBar(volume);
-
 }
 
 // 播放进度条
@@ -70,9 +66,6 @@ var processPlayTxt = function (curTime, totalTime) {
     curTimeTxt.innerHTML = curTime;
 }
 
-
-
-
 // 点击播放进度条
 var musicProcessBarEvent = function (event) {
     var target = event.target;
@@ -81,10 +74,7 @@ var musicProcessBarEvent = function (event) {
 
     musicObj.setCurrentTime(offsetX / width);
     compt.setPlayBar(offsetX / width);
-
 }
-
-
 
 // 音量进度条
 var volumeProcessBarEvent = function (event) {
@@ -106,12 +96,10 @@ var addListeners = function () {
         compt.registerEvent('#id-icon-mute', 'click', muteIconClickEvent);
         compt.registerEvent('#id-control-bar', 'click', musicProcessBarEvent);
         compt.registerEvent('#id-volume-bar', 'click', volumeProcessBarEvent);
-
     }
 
     compt.registerAllEvent();
     musicObj.registerAllEvent();
-
 
     // 定时刷新任务
     var interval = 500;  // 单位 ms
@@ -125,7 +113,6 @@ var addListeners = function () {
         // 时间显示
         processPlayTxt(curTime, totalTime);
     }, interval)
-
 }
 
 const controlBtnEvent = () => {
@@ -138,7 +125,6 @@ const controlBtnEvent = () => {
         music.setSrc(path)
         music.play()
     })
-
 }
 
 const init = () =>  {
@@ -162,8 +148,6 @@ const init = () =>  {
     // 控制播放按钮
     let controlBtn = ControlButton.new()
     controlBtn.addListeners()
-
-
 }
 
 // 程序入口

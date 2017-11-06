@@ -26,55 +26,42 @@ class ControlButton{
     }
 
     stop(music, target) {
-        // 停止播放
         music.stop()
     }
     backward(music, target) {
-        // 上一首
         music.backward()
     }
 
     forward(music, target) {
-        // 下一首
         music.forward()
     }
 
     random(music, target) {
-        // 随机播放
         music.random()
     }
 
     pause(music, target) {
-        // 暂停
         if (music.music.paused) {
-            // 被暂停，则播放
             target.classList.remove('fa-play')
             target.classList.add('fa-pause')
             music.play()
         } else {
-            // 暂停
             target.classList.remove('fa-pause')
             target.classList.add('fa-play')
             music.pause()
-
         }
     }
 
     play(music, target) {
-        // 播放
         if (music.music.paused) {
-            // 被暂停，则播放
             target.classList.remove('fa-play')
             target.classList.add('fa-pause')
             music.play()
         } else {
-            // 暂停
             target.classList.remove('fa-pause')
             target.classList.add('fa-play')
             music.pause()
-
         }
-
     }
 
     addListeners() {
